@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
+    private HistogramDisplay histogramDisplay;
+
     public MainFrame() throws HeadlessException{
         this.setTitle("Histogram Viewer");
         this.setSize(800,600);
@@ -21,27 +23,14 @@ public class MainFrame extends JFrame {
     }
 
     private Component createHistogramDisplay() {
-        JFreeChart histogram = ChartFactory.createHistogram(
-                "Histogram",
-                "ages",
-                "count",
-                dataset(),
-                PlotOrientation.VERTICAL,
-                false, false, false);
-        return new ChartPanel(histogram);
+        JFreeChartHistogramDisplay display = new JFreeChartHistogramDisplay();
+        this.histogramDisplay=display;
+        return display;
     }
 
-    private HistogramDataset dataset() {
-        HistogramDataset dataset = new HistogramDataset();
-        dataset.addSeries("serie", values(), 5);
-        return dataset;
-    }
 
-    private double[] values() {
-        return new double[] {1,4,5,2,5,7,8,5,2,9,7,8,4,2,6,7,4};
-    }
 
-    public static void main(String[] args) {
-        new MainFrame().setVisible(true);
+    public HistogramDisplay histogramDisplay() {
+        return histogramDisplay;
     }
 }
